@@ -3,7 +3,7 @@
     <h1>{{ msg }}</h1>
     <input id="doInput" v-model="newItem" placeholder="do what?" @keydown.enter="addItem">
     <ul>
-      <li v-for="(item, index) in items" :key="item.id">
+      <li v-for="(item, index) in items" :key="index">
         <input type="checkbox" :checked="item.isFinished" @click="toggle(item)"><span :class="{deleteLine: item.isFinished}">{{ index + 1 }}.{{ item.content }}</span><span class="finish" v-show="item.isFinished">finished</span><span class="delete" @click="delItem(item, index)">delete</span>
       </li>
     </ul>
@@ -19,14 +19,12 @@ export default {
   data() {
     return {
       newItem: "",
-      items: JSON.parse(window.localStorage.getItem("itemList")) || [],
-      nextItemId: 1
+      items: JSON.parse(window.localStorage.getItem("itemList")) || []
     };
   },
   methods: {
     addItem() {
       this.items.push({
-        id: this.nextItemId++,
         content: this.newItem,
         isFinished: false
       });
